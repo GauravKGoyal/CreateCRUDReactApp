@@ -10,14 +10,33 @@ import AddIcon from "@material-ui/icons/Add";
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
+  const [email, setEmail] = React.useState(null);
+  const [user, setUser] = React.useState('');
+  const [firstName, setfirstName] = React.useState('');
+  const [lastName, setlastName] = React.useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    console.log(email,user);
+    // persist changes
+    // clear states of the contorl 
     setOpen(false);
   };
+
+  function handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    if (name === "email")
+      setEmail(value)
+    else if (name === "user")
+      setUser(value)
+  }
+
 
   return (
     <div>
@@ -38,17 +57,48 @@ export default function FormDialog() {
           </DialogContentText> */}
           <TextField
             autoFocus
-            margin="dense"
-            id="name"
+            id="email"
+            name="email"
+            margin="none"
             label="Email Address"
             type="email"
+            style={{marginBottom:8}}
+            value = {email}
+            onChange={handleInputChange}
+            required
             fullWidth
           />
 
           <TextField
-            id="name"
+            id="user"
+            name="user"
+            margin="normal"
             label="User"
             type="text"
+            value = {user}
+            onChange={handleInputChange}
+            fullWidth
+          />
+
+          <TextField
+            id="firstName"
+            name="firstName"
+            margin="normal"
+            label="First name"
+            type="text"
+            value = {firstName}
+            onChange={handleInputChange}
+            fullWidth
+          />
+
+          <TextField
+            id="lastName"
+            name="lastName"
+            margin="normal"
+            label="Last name"
+            type="text"
+            value = {lastName}
+            onChange={handleInputChange}
             fullWidth
           />
         </DialogContent>
