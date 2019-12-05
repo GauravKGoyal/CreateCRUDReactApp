@@ -11,7 +11,7 @@ export default function PageHeader() {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" style={title}>
-          Welcome
+          Nutrition
         </Typography>
         <Button color="inherit">Login</Button>
       </Toolbar>

@@ -5,12 +5,11 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import TablePagination from "@material-ui/core/TablePagination";
 import Button from "@material-ui/core/Button";
-import { rows } from "../store";
-import AddDesertDialog from "./AddDesertDialog";
+import { nutritions } from "../store";
+import AddDessertDialog from "./AddDessertDialog";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles({
   root: {
@@ -25,28 +24,36 @@ const useStyles = makeStyles({
   }
 });
 
-const TableToolbar = () => {
-  const handleAdd = (event) => {
-    console.log("add")
-  };
+// const TableToolbar = () => {
+//   return (
+//     <div>
+//       {/* <Toolbar>
+//         <Typography variant="h6" id="tableTitle">
+//           <AddDesertDialog />
+//         </Typography>
+//       </Toolbar> */}
+//     </div>
+//   );
+// };
 
-  return (
-    <div>
-      <Toolbar>
-        <Typography variant="h6" id="tableTitle">
-          Nutrition
-        </Typography>
-      </Toolbar>
-      <AddDesertDialog />
-      
-    </div>
-  );
-};
-
-export default function SimpleTable() {
+export default function NutritionTable() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [modelOpen, setModelOpen] = React.useState(false);
+  const [selectedNutrition, setSelectedNutrition] = React.useState({
+    nutrition: {
+      id: 0,
+      email: "",
+      firstName: "",
+      lastName: ""
+    }
+  });
+
+  const onCloseModel = refreshList => {
+    console.log("refreshList:", refreshList);
+    setModelOpen(false);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -55,14 +62,26 @@ export default function SimpleTable() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const handleClick = (event, name) => {
+  const handleClickRow = (event, id) => {
+    setSelectedNutrition({ nutrition: { id: id } });
     // hit database
-    console.log(name);
+    console.log(id);
+  };
+  const handleClickAdd = event => {
+    setSelectedNutrition({ nutrition: { id: 1 } });
+    setModelOpen(true);
   };
 
   return (
     <div className={classes.root}>
-      <TableToolbar> </TableToolbar>
+      <Button startIcon={<AddIcon />} color="primary" onClick={handleClickAdd}>
+        Add
+      </Button>
+      <AddDessertDialog
+        open={modelOpen}
+        onClose={onCloseModel}
+        data={selectedNutrition}
+      />
       <div className={classes.tableWrapper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -75,13 +94,13 @@ export default function SimpleTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {nutritions
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map(row => (
                 <TableRow
                   hover
-                  key={row.name}
-                  onClick={event => handleClick(event, row.name)}
+                  key={row.id}
+                  onClick={event => handleClickRow(event, row.id)}
                 >
                   <TableCell component="th" scope="row">
                     {row.name}
@@ -98,7 +117,7 @@ export default function SimpleTable() {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={rows.length}
+        count={nutritions.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

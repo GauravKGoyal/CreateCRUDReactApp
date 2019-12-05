@@ -1,6 +1,6 @@
 import React from "react";
 import { Paper } from "@material-ui/core";
-import Table from './SimpleTable';
+import NutritionTable from './NutritionTable';
 
 export default function LeftPane() {
   return (
@@ -8,7 +8,7 @@ export default function LeftPane() {
       square="true"
       style={{ padding: 20, marginTop: 10, marginBottom: 10 }}
     >
-       <Table />
+       <NutritionTable />
     </Paper>
   );
 }
