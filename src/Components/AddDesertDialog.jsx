@@ -87,7 +87,7 @@ class AddDessertDialog extends Component {
           aria-labelledby="form-dialog-title"
         >
           <form onSubmit={this.handleSubmit}>
-            <DialogTitle id="form-dialog-title">Add Nutrition</DialogTitle>
+            <DialogTitle id="form-dialog-title">Nutrition</DialogTitle>
             <DialogContent>
               {/* <DialogContentText>
               To subscribe to this website, please enter your email address here. We will send updates

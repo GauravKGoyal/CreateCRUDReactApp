@@ -53,18 +53,19 @@ class AddDessertDialog extends Component {
     if (this.state.changed === true) {
       // var contents = JSON.stringify({
       //   id: this.props.data.nutrition.id,
-      //   email: this.props.data.nutrition.email,
-      //   user: this.props.data.nutrition.user,
-      //   firstName : this.props.data.firstName,
-      //   lastName: this.props.data.lastName,
+      //   name: this.props.data.nutrition.name,
+      //   calories: this.props.data.nutrition.calories,
+      //   fat : this.props.data.fat,
+      //   carbs: this.props.data.carbs,
       //   changed: this.state.changed
       // });
       var contents = JSON.stringify({
         id: event.target.id.value,
-        email: event.target.email.value,
-        user: event.target.user.value,
-        firstName: event.target.firstName.value,
-        lastName: event.target.lastName.value
+        name: event.target.name.value,
+        calories: event.target.calories.value,
+        fat: event.target.fat.value,
+        carbs: event.target.carbs.value,
+        protein: event.target.protein.value
       });
       // save to database
       // show toast for success or failure
@@ -86,10 +87,10 @@ class AddDessertDialog extends Component {
           aria-labelledby="form-dialog-title"
         >
           <form onSubmit={this.handleSubmit}>
-            <DialogTitle id="form-dialog-title">Add Nutrition</DialogTitle>
+            <DialogTitle id="form-dialog-title">{this.props.data.action} Nutrition</DialogTitle>
             <DialogContent>
               {/* <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send updates
+              To subscribe to this website, please enter your name address here. We will send updates
               occasionally.
             </DialogContentText> */}
               <TextField
@@ -106,48 +107,59 @@ class AddDessertDialog extends Component {
                 fullWidth
               />
               <TextField
-                id="email"
-                name="email"
-                value={this.props.data.nutrition.email}
+                id="name"
+                name="name"
+                value={this.props.data.nutrition.name}
                 onChange={this.handleInputChange}
                 required
                 autoFocus
                 margin="none"
-                label="Email Address"
-                type="email"
+                label="Name"
+                type="name"
                 style={{ marginBottom: 8 }}
                 fullWidth
               />
 
               <TextField
-                id="user"
-                name="user"
-                value={this.props.data.nutrition.user}
+                id="calories"
+                name="calories"
+                value={this.props.data.nutrition.calories}
                 onChange={this.handleInputChange}
                 margin="normal"
-                label="User"
+                label="Calories"
                 type="text"
                 fullWidth
               />
 
               <TextField
-                id="firstName"
-                name="firstName"
-                value={this.props.data.nutrition.firstName}
+                id="fat"
+                name="fat"
+                value={this.props.data.nutrition.fat}
                 onChange={this.handleInputChange}
                 margin="normal"
-                label="First name"
+                label="Fat"
                 type="text"
                 fullWidth
               />
 
               <TextField
-                id="lastName"
-                name="lastName"
-                value={this.props.data.nutrition.lastName}
+                id="carbs"
+                name="carbs"
+                value={this.props.data.nutrition.carbs}
                 onChange={this.handleInputChange}
                 margin="normal"
-                label="Last name"
+                label="Carbs"
+                type="text"
+                fullWidth
+              />
+
+              <TextField
+                id="protein"
+                name="protein"
+                value={this.props.data.nutrition.protein}
+                onChange={this.handleInputChange}
+                margin="normal"
+                label="Protein"
                 type="text"
                 fullWidth
               />

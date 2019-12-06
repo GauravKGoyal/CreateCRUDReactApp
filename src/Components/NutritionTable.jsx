@@ -62,13 +62,20 @@ export default function NutritionTable() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const handleClickRow = (event, id) => {
-    setSelectedNutrition({ nutrition: { id: id } });
+  const handleClickRow = (event, row) => {
+    setSelectedNutrition({ action: "Edit", nutrition: { 
+      id:row.id, 
+      name:row.name,
+      calories:row.calories,
+      fat:row.fat,
+      cabs:row.carbs,
+      protein:row.protein
+    } });
     // hit database
-    console.log(id);
+    setModelOpen(true);
   };
   const handleClickAdd = event => {
-    setSelectedNutrition({ nutrition: { id: 1 } });
+    setSelectedNutrition({action: "Add", nutrition: { id: 1 } });
     setModelOpen(true);
   };
 
@@ -100,7 +107,7 @@ export default function NutritionTable() {
                 <TableRow
                   hover
                   key={row.id}
-                  onClick={event => handleClickRow(event, row.id)}
+                  onClick={event => handleClickRow(event, row)}
                 >
                   <TableCell component="th" scope="row">
                     {row.name}
