@@ -5,17 +5,25 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
 
 class AddDessertDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      snackbaropen: false,
+      snackbarmsg: "",
       changed: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
+
+  snackbarClose = event => {
+    this.setState({ snackbaropen: false });
+  };
 
   clearInputStates() {
     this.setState({
@@ -57,18 +65,17 @@ class AddDessertDialog extends Component {
         user: event.target.user.value,
         firstName: event.target.firstName.value,
         lastName: event.target.lastName.value
-      })
-      alert(contents);
+      });
+      // save to database
+      // show toast for success or failure
+      this.setState({ snackbaropen: true, snackbarmsg: contents });
     }
-    // save to database
-    // show toast for success or failure
 
     this.props.onClose(this.state.changed);
     this.clearInputStates();
   }
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <Dialog
@@ -153,6 +160,23 @@ class AddDessertDialog extends Component {
             </DialogActions>
           </form>
         </Dialog>
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={this.state.snackbaropen}
+          autoHideDuration={3000}
+          onClose={this.snackbarClose}
+          message={<span id="message-id">{this.state.snackbarmsg}</span>}
+          action={[
+            <IconButton
+              key="close"
+              arial-label="Close"
+              color="inherit"
+              onClick={this.snackbarClose}
+            >
+              x
+            </IconButton>
+          ]}
+        />
       </div>
     );
   }
